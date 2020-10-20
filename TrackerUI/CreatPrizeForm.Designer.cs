@@ -34,7 +34,7 @@
             this.placeNumberValue = new System.Windows.Forms.TextBox();
             this.placeNameLabel = new System.Windows.Forms.Label();
             this.placeNameValue = new System.Windows.Forms.TextBox();
-            this.pricePercentageValue = new System.Windows.Forms.TextBox();
+            this.prizePercentageValue = new System.Windows.Forms.TextBox();
             this.pricePercentageLabel = new System.Windows.Forms.Label();
             this.prizeAmountValue = new System.Windows.Forms.TextBox();
             this.prizeAmountLabel = new System.Windows.Forms.Label();
@@ -89,12 +89,13 @@
             this.placeNameValue.Size = new System.Drawing.Size(280, 43);
             this.placeNameValue.TabIndex = 5;
             // 
-            // pricePercentageValue
+            // prizePercentageValue
             // 
-            this.pricePercentageValue.Location = new System.Drawing.Point(331, 459);
-            this.pricePercentageValue.Name = "pricePercentageValue";
-            this.pricePercentageValue.Size = new System.Drawing.Size(280, 43);
-            this.pricePercentageValue.TabIndex = 5;
+            this.prizePercentageValue.Location = new System.Drawing.Point(331, 459);
+            this.prizePercentageValue.Name = "prizePercentageValue";
+            this.prizePercentageValue.Size = new System.Drawing.Size(280, 43);
+            this.prizePercentageValue.TabIndex = 5;
+            this.prizePercentageValue.Text = "0";
             // 
             // pricePercentageLabel
             // 
@@ -113,6 +114,7 @@
             this.prizeAmountValue.Name = "prizeAmountValue";
             this.prizeAmountValue.Size = new System.Drawing.Size(280, 43);
             this.prizeAmountValue.TabIndex = 5;
+            this.prizeAmountValue.Text = "0";
             // 
             // prizeAmountLabel
             // 
@@ -150,19 +152,20 @@
             this.createPrizeButton.TabIndex = 6;
             this.createPrizeButton.Text = "Create Prize";
             this.createPrizeButton.UseVisualStyleBackColor = true;
+            this.createPrizeButton.Click += new System.EventHandler(this.createPrizeButton_Click);
             // 
             // CreatPrizeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1500, 832);
+            this.ClientSize = new System.Drawing.Size(733, 832);
             this.Controls.Add(this.createPrizeButton);
             this.Controls.Add(this.orLabel);
             this.Controls.Add(this.prizeAmountLabel);
             this.Controls.Add(this.prizeAmountValue);
             this.Controls.Add(this.pricePercentageLabel);
-            this.Controls.Add(this.pricePercentageValue);
+            this.Controls.Add(this.prizePercentageValue);
             this.Controls.Add(this.placeNameValue);
             this.Controls.Add(this.placeNameLabel);
             this.Controls.Add(this.placeNumberValue);
@@ -170,7 +173,7 @@
             this.Controls.Add(this.createPrizeLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "CreatPrizeForm";
             this.Text = "Creat Prize";
             this.ResumeLayout(false);
@@ -185,7 +188,7 @@
         private System.Windows.Forms.TextBox placeNumberValue;
         private System.Windows.Forms.Label placeNameLabel;
         private System.Windows.Forms.TextBox placeNameValue;
-        private System.Windows.Forms.TextBox pricePercentageValue;
+        private System.Windows.Forms.TextBox prizePercentageValue;
         private System.Windows.Forms.Label pricePercentageLabel;
         private System.Windows.Forms.TextBox prizeAmountValue;
         private System.Windows.Forms.Label prizeAmountLabel;
