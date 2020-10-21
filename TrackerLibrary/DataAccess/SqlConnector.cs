@@ -4,13 +4,31 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using TrackerLibrary.DataAccess.TextHelpers;
 using TrackerLibrary.Models;
 
 namespace TrackerLibrary.DataAccess
 {
     public class SqlConnector : IDataConnection
     {
-        //TODO - Make the CreatePrize method actually save to the database
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString("Tournaments")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@FirstName", model.FirstName);
+                p.Add("@lastName", model.lastName);
+                p.Add("@EmailAddress", model.EmailAddress);
+                p.Add("@CellphoneNumber", model.CellphoneNumber);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spPeople_Insert", p, commandType: CommandType.StoredProcedure);
+                model.Id = p.Get<int>("@id");
+
+                return model;
+            }
+        }
+
         /// <summary>
         /// Saves a new prize to the database.
         /// </summary>
@@ -28,7 +46,6 @@ namespace TrackerLibrary.DataAccess
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spPrizes_Insert", p, commandType: CommandType.StoredProcedure);
-
                 model.Id = p.Get<int>("@id");
 
                 return model;
