@@ -12,10 +12,39 @@ namespace TrackerUI
 {
     public partial class CreateTeamForm : Form
     {
+        private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
+        private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
         public CreateTeamForm()
         {
             InitializeComponent();
+            //CreateSampleData();
+            WireUpLists();
         }
+
+        private void CreateSampleData()
+        {
+            availableTeamMembers.Add(new PersonModel { FirstName = "Justice", lastName = "Ngwenya" });
+            availableTeamMembers.Add(new PersonModel { FirstName = "Justine", lastName = "Ngwenya" });
+
+            selectedTeamMembers.Add(new PersonModel { FirstName = "Jane", lastName = "Smith" });
+            selectedTeamMembers.Add(new PersonModel { FirstName = "Bill", lastName = "Jones" });
+
+        }
+
+        private void WireUpLists()
+        {
+            selectTeamDropDown.DataSource = null;
+
+            selectTeamDropDown.DataSource = availableTeamMembers;
+            selectTeamDropDown.DisplayMember = "FullName";
+
+            teamMembersListBox.DataSource = null;
+
+            teamMembersListBox.DataSource = selectedTeamMembers;
+            teamMembersListBox.DisplayMember = "FullName";
+
+        }
+
         private void CreateTeamForm_Load(object sender, EventArgs e)
         {
 
@@ -32,27 +61,28 @@ namespace TrackerUI
 
                 GlobalConfig.Connection.CreatePerson(p);
 
+                selectedTeamMembers.Add(p);
+                WireUpLists();
+
                 firstNameValue.Text = "";
                 lastNameValue.Text = "";
                 emailValue.Text = "";
                 cellphoneValue.Text = "";
-
-            }else
+            }
+            else
             {
                 MessageBox.Show("You need to fill in all of the fields.");
             }
         }
         private bool ValidateForm()
         {
-            // TODO - Add validation to the form
-
-            if(firstNameValue.Text.Length == 0)
+            if (firstNameValue.Text.Length == 0)
             {
                 return false;
             }
-            if(lastNameValue.Text.Length == 0)
+            if (lastNameValue.Text.Length == 0)
             {
-
+                return false;
             }
 
             if (emailValue.Text.Length == 0)
@@ -65,6 +95,47 @@ namespace TrackerUI
             }
 
             return true;
+        }
+
+        private void addMemberButton_Click(object sender, EventArgs e)
+        {
+            PersonModel p = (PersonModel)selectTeamDropDown.SelectedItem;
+
+            if (p != null)
+            {
+                availableTeamMembers.Remove(p);
+                selectedTeamMembers.Add(p);
+
+                WireUpLists();
+            }
+        }
+
+        private void teamMembersListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void removeSelectedMemberButton_Click(object sender, EventArgs e)
+        {
+            PersonModel p = (PersonModel)teamMembersListBox.SelectedItem;
+
+            if (p != null)
+            {
+                selectedTeamMembers.Remove(p);
+                availableTeamMembers.Add(p);
+
+                WireUpLists();
+            }
+        }
+
+        private void createTeamButton_Click(object sender, EventArgs e)
+        {
+            TeamModel t = new TeamModel();
+            t.TeamName = teamNameValue.Text;
+            t.TeamMembers = selectedTeamMembers;
+            t = GlobalConfig.Connection.Createteam(t);
+
+            //TODO - if we aren't closing this form after creation, reset the form
         }
     }
 }
